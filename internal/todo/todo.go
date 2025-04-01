@@ -39,8 +39,17 @@ func (listItems *List) Add(items []string) {
 
 func (listItems *List) List() {
 	for _, listItem := range *listItems {
-		for _, element := range [5]any{listItem.CreatedAt, listItem.Priority, listItem.Text, listItem.Completed, listItem.CompletedAt} {
-			fmt.Printf("%s", element)
-		}
+    completedAt := ""
+    if listItem.CompletedAt.IsZero() {
+      completedAt = listItem.CompletedAt.Format(time.Kitchen)
+    }
+		fmt.Printf(
+			"%s - [%s] %s - Completed? [%s] (%s)\n",
+			listItem.CreatedAt.Format(time.Kitchen),
+			listItem.Priority,
+			listItem.Text,
+			listItem.Completed,
+			completedAt,
+		)
 	}
 }
