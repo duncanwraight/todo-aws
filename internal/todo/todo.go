@@ -23,12 +23,12 @@ type ListItem struct {
 	CompletedAt *time.Time
 }
 
-type ListItems []ListItem
+type List []ListItem
 
-func (listItems *ListItems) Add(items []string) {
+func (listItems *List) Add(items []string) {
 	listItem := ListItem{
 		Text:        strings.Join(items, " "),
-		Priority:    Low,
+		Priority:    Low, // TODO
 		Completed:   false,
 		CreatedAt:   time.Now(),
 		CompletedAt: nil,
@@ -37,8 +37,10 @@ func (listItems *ListItems) Add(items []string) {
 	fmt.Printf("New item added: %s\n", listItem.Text)
 }
 
-func (listItems *ListItems) List() {
+func (listItems *List) List() {
 	for _, listItem := range *listItems {
-		fmt.Printf("%s\n", listItem.Text)
+		for _, element := range [5]any{listItem.CreatedAt, listItem.Priority, listItem.Text, listItem.Completed, listItem.CompletedAt} {
+			fmt.Printf("%s", element)
+		}
 	}
 }

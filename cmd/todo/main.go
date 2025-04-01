@@ -8,18 +8,34 @@ import (
 
 var cmd []string
 
+func usage() {
+	fmt.Println("Usage: todo <list|add|del> [arguments]")
+	os.Exit(1)
+}
+
 func main() {
-	if len(os.Args) > 1 {
+	numArgs := len(os.Args)
+	if numArgs > 1 {
 		cmd = os.Args[1:]
+		todoList := todo.List{}
 
 		switch cmd[0] {
+		case "list":
+			todoList.Add(os.Args[2:])
+			todoList.List()
 		case "add":
-			todoListItems := todo.ListItems{}
-			todoListItems.Add(os.Args[1:])
-			todoListItems.List()
+			if numArgs == 2 {
+				usage()
+			}
+			todoList.Add(os.Args[1:])
+		case "del":
+			fmt.Println("Implement deletion")
 		default:
-			fmt.Println("Usage: add <item>")
+			usage()
 		}
+		todoList.List()
+	} else {
+		fmt.Println("Usage: todo <list|add|del>")
 	}
 
 }
